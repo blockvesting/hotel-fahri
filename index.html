@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fahri Hotel - Hotel Search & Listing Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset & Base */
+        :root {
+            --primary: #2a5bd7;
+            --primary-dark: #1d4ab5;
+            --secondary: #ff6b35;
+            --light: #f8f9fa;
+            --dark: #2d3436;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.12);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+        
+        body {
+            color: var(--dark);
+            line-height: 1.6;
+            background-color: #fff;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.98) 100%);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            padding: 15px 0;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            font-size: 32px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .logo:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(42, 91, 215, 0.1) 0%, transparent 70%);
+            top: 0;
+            left: 0;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        
+        .logo:hover:after {
+            opacity: 1;
+        }
+        
+        .main-nav {
+            display: flex;
+            list-style: none;
+        }
+        
+        .main-nav li {
+            margin-left: 30px;
+        }
+        
+        .main-nav li a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 16px;
+            transition: var(--transition);
+            padding: 8px 0;
+            position: relative;
+        }
+        
+        .main-nav li a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            background: var(--primary);
+            bottom: 0;
+            left: 0;
+            border-radius: 3px;
+            transition: width 0.3s;
+        }
+        
+        .main-nav li a:hover {
+            color: var(--primary);
+        }
+        
+        .main-nav li a:hover:after {
+            width: 100%;
+        }
+        
+        /* Hero Section with 3D Effect */
+        .hero {
+            height: 85vh;
+            position: relative;
+            margin-top: 80px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
+        }
+        
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+            color: white;
+            text-align: center;
+            padding: 0 20px;
+        }
+        
+        .hero-title {
+            font-size: 52px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            animation: fadeInDown 1s ease-out;
+        }
+        
+        .hero-subtitle {
+            font-size: 22px;
+            font-weight: 300;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 1s ease-out 0.3s both;
+            opacity: 0.9;
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Search Bar - 3D Effect */
+        .search-section {
+            position: relative;
+            z-index: 10;
+            margin-top: -80px;
+            animation: slideUp 1s ease-out 0.5s both;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .search-box {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--shadow-hover);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+        
+        .search-box h2 {
+            font-size: 24px;
+            color: var(--dark);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .search-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group label {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .form-group input, .form-group select {
+            padding: 15px 18px;
+            border: 1px solid var(--light-gray);
+            border-radius: 10px;
+            font-size: 16px;
+            transition: var(--transition);
+            background: white;
+        }
+        
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(42, 91, 215, 0.1);
+        }
+        
+        .search-btn {
+            grid-column: 1 / -1;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        
+        .search-btn i {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        
+        .search-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(42, 91, 215, 0.2);
+        }
+        
+        /* Filter Section */
+        .filter-section {
+            padding: 60px 0 30px;
+            background-color: var(--light);
+        }
+        
+        .filters-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .filter-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .filter-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .filter-title {
+            font-size: 18px;
+            color: var(--dark);
+            margin-bottom: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        
+        .filter-title i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+        
+        .price-slider {
+            width: 100%;
+            height: 5px;
+            background: var(--light-gray);
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+        
+        .price-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--primary);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .filter-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .filter-option input {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+        }
+        
+        .sort-options {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .sort-btn {
+            padding: 10px 20px;
+            background: white;
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        
+        .sort-btn:hover, .sort-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        /* Hotel Listing */
+        .hotel-listing {
+            padding: 60px 0;
+        }
+        
+        .section-title {
+            font-size: 32px;
+            color: var(--dark);
+            margin-bottom: 40px;
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 4px;
+            background: var(--primary);
+            bottom: -10px;
+            left: 0;
+            border-radius: 2px;
+        }
+        
+        .hotels-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .hotel-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            transform-style: preserve-3d;
+        }
+        
+        .hotel-card:hover {
+            transform: translateY(-15px) rotateX(5deg);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .hotel-image {
+            height: 220px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hotel-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .hotel-card:hover .hotel-image img {
+            transform: scale(1.05);
+        }
+        
+        .hotel-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--secondary);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .hotel-content {
+            padding: 25px;
+        }
+        
+        .hotel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .hotel-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+        
+        .hotel-rating {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 193, 7, 0.1);
+            padding: 5px 10px;
+            border-radius: 20px;
+        }
+        
+        .hotel-rating i {
+            color: #ffc107;
+            margin-right: 5px;
+        }
+        
+        .hotel-location {
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .hotel-location i {
+            margin-right: 8px;
+            color: var(--primary);
+        }
+        
+        .hotel-description {
+            color: var(--gray);
+            font-size: 15px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .hotel-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .feature {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: var(--gray);
+        }
+        
+        .feature i {
+            margin-right: 5px;
+            color: var(--primary);
+        }
+        
+        .hotel-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--light-gray);
+        }
+        
+        .hotel-price {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .hotel-price span {
+            font-size: 14px;
+            color: var(--gray);
+            font-weight: normal;
+        }
+        
+        .hotel-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 14px;
+        }
+        
+        .btn-outline {
+            background: white;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(42, 91, 215, 0.2);
+        }
+        
+        /* Customer Service Section */
+        .cs-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cs-section:before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(42, 91, 215, 0.1) 0%, transparent 70%);
+            top: -150px;
+            right: -150px;
+            border-radius: 50%;
+        }
+        
+        .cs-section:after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255, 107, 53, 0.1) 0%, transparent 70%);
+            bottom: -100px;
+            left: -100px;
+            border-radius: 50%;
+        }
+        
+        .cs-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .cs-content h2 {
+            font-size: 36px;
+            color: var(--dark);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .cs-content p {
+            font-size: 18px;
+            color: var(--gray);
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .cs-card {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: var(--shadow-hover);
+            text-align: center;
+            transition: var(--transition);
+        }
+        
+        .cs-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .cs-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            font-size: 48px;
+            color: white;
+            box-shadow: 0 10px 20px rgba(42, 91, 215, 0.2);
+        }
+        
+        .cs-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+        
+        .cs-title {
+            color: var(--gray);
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+        
+        .btn-whatsapp {
+            background: #25D366;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 18px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: var(--transition);
+            width: 100%;
+        }
+        
+        .btn-whatsapp i {
+            margin-right: 10px;
+            font-size: 24px;
+        }
+        
+        .btn-whatsapp:hover {
+            background: #1da851;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2);
+        }
+        
+        /* Information Section */
+        .info-section {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+        
+        .info-card {
+            background: var(--light);
+            border-radius: 16px;
+            padding: 40px 30px;
+            transition: var(--transition);
+        }
+        
+        .info-card:hover {
+            transform: translateY(-10px);
+            background: white;
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .info-icon {
+            font-size: 48px;
+            color: var(--primary);
+            margin-bottom: 25px;
+        }
+        
+        .info-card h3 {
+            font-size: 22px;
+            color: var(--dark);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .info-card p {
+            color: var(--gray);
+            line-height: 1.7;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 80px 0 30px;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-col h3 {
+            font-size: 20px;
+            margin-bottom: 25px;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .footer-col p, .footer-col a {
+            color: #adb5bd;
+            margin-bottom: 12px;
+            display: block;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-col a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #adb5bd;
+            font-size: 14px;
+        }
+        
+        /* Floating WhatsApp Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+            z-index: 100;
+            transition: var(--transition);
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+        
+        .whatsapp-float:hover {
+            background: #1da851;
+            transform: scale(1.1);
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
+        }
+        
+        /* 3D Animations */
+        .parallax-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .shape {
+            position: absolute;
+            background: linear-gradient(135deg, rgba(42, 91, 215, 0.05) 0%, rgba(255, 107, 53, 0.05) 100%);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+        
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+        
+        .shape-2 {
+            width: 200px;
+            height: 200px;
+            top: 60%;
+            right: 10%;
+            animation-delay: 5s;
+        }
+        
+        .shape-3 {
+            width: 150px;
+            height: 150px;
+            bottom: 20%;
+            left: 15%;
+            animation-delay: 10s;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+            100% {
+                transform: translateY(0) rotate(360deg);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 42px;
+            }
+            
+            .search-form {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .hotels-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .main-nav {
+                display: none;
+            }
+            
+            .hero-title {
+                font-size: 36px;
+            }
+            
+            .hero-subtitle {
+                font-size: 18px;
+            }
+            
+            .search-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .hotels-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .cs-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Loading Animation */
+        .loader {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        
+        .loader.active {
+            display: flex;
+        }
+        
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid var(--light-gray);
+            border-top: 5px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- 3D Background Animation -->
+    <div class="parallax-bg">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+    
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="spinner"></div>
+        <p>Searching hotels...</p>
+    </div>
+    
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <i class="fas fa-hotel"></i>Fahri<span>Hotel</span>
+            </a>
+            
+            <ul class="main-nav">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#search">Search Hotels</a></li>
+                <li><a href="#hotels">Hotel Listings</a></li>
+                <li><a href="#cs">Customer Service</a></li>
+                <li><a href="#info">Information</a></li>
+            </ul>
+        </div>
+    </header>
+    
+    <!-- Hero Section with Video -->
+    <section class="hero" id="home">
+        <video autoplay muted loop playsinline class="hero-video">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-hotel-service-bell-on-the-counter-41521-large.mp4" type="video/mp4">
+        </video>
+        
+        <div class="container hero-content">
+            <h1 class="hero-title">Find Your Perfect Stay</h1>
+            <p class="hero-subtitle">Discover the best hotels at amazing prices. Book directly with our customer service for personalized assistance and the best rates guaranteed.</p>
+        </div>
+    </section>
+    
+    <!-- Search Bar -->
+    <section class="search-section" id="search">
+        <div class="container">
+            <div class="search-box">
+                <h2><i class="fas fa-search"></i> Find Your Hotel</h2>
+                <form class="search-form" id="hotelSearchForm">
+                    <div class="form-group">
+                        <label for="destination"><i class="fas fa-map-marker-alt"></i> Destination</label>
+                        <input type="text" id="destination" placeholder="City or Location" value="Bali, Indonesia">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="checkin"><i class="fas fa-calendar-alt"></i> Check-in Date</label>
+                        <input type="date" id="checkin" value="2023-12-15">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="checkout"><i class="fas fa-calendar-alt"></i> Check-out Date</label>
+                        <input type="date" id="checkout" value="2023-12-20">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="rooms"><i class="fas fa-bed"></i> Rooms & Guests</label>
+                        <select id="rooms">
+                            <option value="1">1 Room, 2 Guests</option>
+                            <option value="2">2 Rooms, 4 Guests</option>
+                            <option value="3">3 Rooms, 6 Guests</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="search-btn">
+                        <i class="fas fa-search"></i> Search Hotels
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Filter Section -->
+    <section class="filter-section">
+        <div class="container">
+            <div class="filters-container">
+                <div class="filter-card">
+                    <h3 class="filter-title"><i class="fas fa-filter"></i> Filter Results</h3>
+                    
+                    <h4>Price Range</h4>
+                    <input type="range" min="100" max="1000" value="500" class="price-slider" id="priceRange">
+                    <div id="priceValue" style="margin-top: 10px; font-weight: 600;">Up to $500/night</div>
+                    
+                    <h4 style="margin-top: 20px;">Amenities</h4>
+                    <div class="filter-option">
+                        <input type="checkbox" id="pool" checked>
+                        <label for="pool">Swimming Pool</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="breakfast" checked>
+                        <label for="breakfast">Free Breakfast</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="wifi" checked>
+                        <label for="wifi">Free WiFi</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="spa">
+                        <label for="spa">Spa</label>
+                    </div>
+                </div>
+                
+                <div class="filter-card">
+                    <h3 class="filter-title"><i class="fas fa-star"></i> Hotel Category</h3>
+                    <div class="filter-option">
+                        <input type="checkbox" id="luxury" checked>
+                        <label for="luxury">Luxury (5 Star)</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="boutique" checked>
+                        <label for="boutique">Boutique Hotels</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="resort" checked>
+                        <label for="resort">Resorts</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="business">
+                        <label for="business">Business Hotels</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="budget">
+                        <label for="budget">Budget Hotels</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="sort-options">
+                <h3 style="width: 100%; margin-bottom: 15px;">Sort By:</h3>
+                <button class="sort-btn active" data-sort="price">Price (Low to High)</button>
+                <button class="sort-btn" data-sort="rating">Guest Rating</button>
+                <button class="sort-btn" data-sort="distance">Distance</button>
+                <button class="sort-btn" data-sort="name">Hotel Name</button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Hotel Listing -->
+    <section class="hotel-listing" id="hotels">
+        <div class="container">
+            <h2 class="section-title">Available Hotels in Bali</h2>
+            <p style="color: var(--gray); margin-bottom: 40px; font-size: 18px;">Found 12 hotels matching your search</p>
+            
+            <div class="hotels-container" id="hotelsContainer">
+                <!-- Hotel 1 -->
+                <div class="hotel-card">
+                    <div class="hotel-image">
+                        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80" alt="Grand Bali Resort">
+                        <div class="hotel-badge">BEST VALUE</div>
+                    </div>
+                    <div class="hotel-content">
+                        <div class="hotel-header">
+                            <div>
+                                <h3 class="hotel-name">Grand Bali Resort & Spa</h3>
+                                <div class="hotel-location">
+                                    <i class="fas fa-map-marker-alt"></i> Seminyak, Bali • 1.2 km to center
+                                </div>
+                            </div>
+                            <div class="hotel-rating">
+                                <i class="fas fa-star"></i> 4.8 (1247 reviews)
+                            </div>
+                        </div>
+                        
+                        <p class="hotel-description">Luxury beachfront resort with stunning ocean views, infinity pools, and world-class spa facilities.</p>
+                        
+                        <div class="hotel-features">
+                            <div class="feature">
+                                <i class="fas fa-wifi"></i> Free WiFi
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-swimming-pool"></i> 3 Pools
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-utensils"></i> 5 Restaurants
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-spa"></i> Spa
+                            </div>
+                        </div>
+                        
+                        <div class="hotel-footer">
+                            <div class="hotel-price">
+                                $245 <span>/ night</span>
+                            </div>
+                            <div class="hotel-actions">
+                                <button class="btn btn-outline view-details">View Details</button>
+                                <button class="btn btn-primary book-now">Book Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Hotel 2 -->
+                <div class="hotel-card">
+                    <div class="hotel-image">
+                        <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80" alt="Ubud Jungle Retreat">
+                        <div class="hotel-badge">ECO-FRIENDLY</div>
+                    </div>
+                    <div class="hotel-content">
+                        <div class="hotel-header">
+                            <div>
+                                <h3 class="hotel-name">Ubud Jungle Retreat</h3>
+                                <div class="hotel-location">
+                                    <i class="fas fa-map-marker-alt"></i> Ubud, Bali • 5.5 km to center
+                                </div>
+                            </div>
+                            <div class="hotel-rating">
+                                <i class="fas fa-star"></i> 4.9 (892 reviews)
+                            </div>
+                        </div>
+                        
+                        <p class="hotel-description">Sustainable luxury villas nestled in the jungle, offering privacy, tranquility, and breathtaking nature views.</p>
+                        
+                        <div class="hotel-features">
+                            <div class="feature">
+                                <i class="fas fa-wifi"></i> Free WiFi
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-swimming-pool"></i> Private Pool
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-utensils"></i> Organic Breakfast
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-leaf"></i> Eco-Friendly
+                            </div>
+                        </div>
+                        
+                        <div class="hotel-footer">
+                            <div class="hotel-price">
+                                $320 <span>/ night</span>
+                            </div>
+                            <div class="hotel-actions">
+                                <button class="btn btn-outline view-details">View Details</button>
+                                <button class="btn btn-primary book-now">Book Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Hotel 3 -->
+                <div class="hotel-card">
+                    <div class="hotel-image">
+                        <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80" alt="Seminyak Beach Hotel">
+                    </div>
+                    <div class="hotel-content">
+                        <div class="hotel-header">
+                            <div>
+                                <h3 class="hotel-name">Seminyak Beach Hotel</h3>
+                                <div class="hotel-location">
+                                    <i class="fas fa-map-marker-alt"></i> Seminyak Beach, Bali • Beachfront
+                                </div>
+                            </div>
+                            <div class="hotel-rating">
+                                <i class="fas fa-star"></i> 4.7 (2103 reviews)
+                            </div>
+                        </div>
+                        
+                        <p class="hotel-description">Modern beachfront hotel with direct beach access, rooftop bar, and panoramic ocean views from every room.</p>
+                        
+                        <div class="hotel-features">
+                            <div class="feature">
+                                <i class="fas fa-wifi"></i> Free WiFi
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-swimming-pool"></i> Infinity Pool
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-utensils"></i> Beachfront Dining
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-dumbbell"></i> Fitness Center
+                            </div>
+                        </div>
+                        
+                        <div class="hotel-footer">
+                            <div class="hotel-price">
+                                $189 <span>/ night</span>
+                            </div>
+                            <div class="hotel-actions">
+                                <button class="btn btn-outline view-details">View Details</button>
+                                <button class="btn btn-primary book-now">Book Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 50px;">
+                <button class="btn btn-primary" style="padding: 15px 40px; font-size: 18px;">
+                    <i class="fas fa-redo"></i> Load More Hotels
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Customer Service Section -->
+    <section class="cs-section" id="cs">
+        <div class="container cs-container">
+            <div class="cs-content">
+                <h2>Need Help Booking?</h2>
+                <p>Our dedicated customer service team is available to help you find the perfect hotel, answer questions, and assist with your reservation. Contact us directly via WhatsApp for personalized service.</p>
+                <p style="font-size: 16px; margin-top: 20px;"><i class="fas fa-check-circle" style="color: var(--secondary); margin-right: 10px;"></i> Best Price Guarantee</p>
+                <p style="font-size: 16px;"><i class="fas fa-check-circle" style="color: var(--secondary); margin-right: 10px;"></i> No Booking Fees</p>
+                <p style="font-size: 16px;"><i class="fas fa-check-circle" style="color: var(--secondary); margin-right: 10px;"></i> 24/7 Customer Support</p>
+            </div>
+            
+            <div class="cs-card">
+                <div class="cs-avatar">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <h3 class="cs-name">CS Fahri Putra</h3>
+                <p class="cs-title">Customer Service Specialist</p>
+                <p style="color: var(--gray); margin-bottom: 25px;">Available 24/7 via WhatsApp for booking assistance and inquiries.</p>
+                <a href="https://wa.me/6281234326186" class="btn-whatsapp" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                </a>
+                <p style="margin-top: 15px; font-size: 14px; color: var(--gray);">Click to start conversation</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Information Section -->
+    <section class="info-section" id="info">
+        <div class="container">
+            <h2 class="section-title">Why Choose Fahri Hotel</h2>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-search-dollar"></i>
+                    </div>
+                    <h3>Best Price Guarantee</h3>
+                    <p>We guarantee the best prices for all hotels listed on our platform. If you find a lower price elsewhere, contact our customer service.</p>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Secure Booking</h3>
+                    <p>Your personal and payment information is protected with industry-standard encryption. Book with confidence and peace of mind.</p>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>24/7 Customer Support</h3>
+                    <p>Our customer service team is available around the clock via WhatsApp to assist with bookings, changes, and any questions.</p>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-file-contract"></i>
+                    </div>
+                    <h3>Flexible Cancellation</h3>
+                    <p>Most hotels offer free cancellation up to 24-48 hours before check-in. Check individual hotel policies for details.</p>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-hotel"></i>
+                    </div>
+                    <h3>Verified Hotels</h3>
+                    <p>All hotels listed on our platform are verified for quality, amenities, and customer service standards.</p>
+                </div>
+                
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-globe-asia"></i>
+                    </div>
+                    <h3>Wide Selection</h3>
+                    <p>From luxury resorts to budget hotels, we offer a wide selection of accommodations in popular destinations worldwide.</p>
+                </div>
+            </div>
+            
+            <!-- Hotel Policies -->
+            <div style="margin-top: 80px; padding: 40px; background: var(--light); border-radius: 16px;">
+                <h2 style="font-size: 28px; margin-bottom: 30px; color: var(--dark);">Hotel Policies & Information</h2>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                    <div>
+                        <h3 style="font-size: 20px; margin-bottom: 15px; color: var(--dark);">Check-in / Check-out</h3>
+                        <p style="color: var(--gray);">Standard check-in time is 3:00 PM and check-out is 12:00 PM. Early check-in and late check-out may be available upon request and subject to availability.</p>
+                    </div>
+                    
+                    <div>
+                        <h3 style="font-size: 20px; margin-bottom: 15px; color: var(--dark);">Cancellation Policy</h3>
+                        <p style="color: var(--gray);">Cancellation policies vary by hotel. Most hotels offer free cancellation up to 24-48 hours before check-in. Please check the specific policy for your selected hotel.</p>
+                    </div>
+                    
+                    <div>
+                        <h3 style="font-size: 20px; margin-bottom: 15px; color: var(--dark);">Payment</h3>
+                        <p style="color: var(--gray);">Payments are processed securely. Some hotels may require a credit card guarantee at the time of booking. Final payment is typically made directly to the hotel.</p>
+                    </div>
+                </div>
+                
+                <div class="disclaimer" style="margin-top: 40px; padding: 20px; background: rgba(42, 91, 215, 0.05); border-radius: 10px; border-left: 4px solid var(--primary);">
+                    <p style="color: var(--gray); font-size: 15px;"><strong>Disclaimer:</strong> Prices, availability, and hotel details may vary depending on date and season. All information is provided by the hotels and is subject to change without notice. Fahri Hotel acts as a booking platform and is not responsible for changes made by the hotels.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col">
+                    <h3>Fahri Hotel</h3>
+                    <p>Your trusted hotel search and booking platform. Connecting travelers with the best accommodations worldwide with personalized customer service.</p>
+                    <div style="display: flex; margin-top: 20px;">
+                        <a href="#" style="margin-right: 15px; font-size: 20px;"><i class="fab fa-facebook"></i></a>
+                        <a href="#" style="margin-right: 15px; font-size: 20px;"><i class="fab fa-instagram"></i></a>
+                        <a href="#" style="margin-right: 15px; font-size: 20px;"><i class="fab fa-twitter"></i></a>
+                        <a href="#" style="font-size: 20px;"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <a href="https://wa.me/6281234326186" target="_blank"><i class="fab fa-whatsapp"></i> CS Fahri Putra (WhatsApp)</a>
+                    <a href="mailto:info@fahrihotel.com"><i class="fas fa-envelope"></i> info@fahrihotel.com</a>
+                    <a href="tel:+62361234567"><i class="fas fa-phone"></i> +62 361 234 567</a>
+                    <p><i class="fas fa-map-marker-alt"></i> Denpasar, Bali, Indonesia</p>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <a href="#home">Home</a>
+                    <a href="#search">Search Hotels</a>
+                    <a href="#hotels">Hotel Listings</a>
+                    <a href="#cs">Customer Service</a>
+                    <a href="#info">Hotel Policies</a>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Legal</h3>
+                    <a href="#">Terms & Conditions</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Cookie Policy</a>
+                    <a href="#">Disclaimer</a>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>Copyright © 2023 Fahri Hotel. All rights reserved. | Hotel Search & Listing Platform</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/6281234326186" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+    
+    <script>
+        // DOM Elements
+        const loader = document.getElementById('loader');
+        const searchForm = document.getElementById('hotelSearchForm');
+        const priceRange = document.getElementById('priceRange');
+        const priceValue = document.getElementById('priceValue');
+        const sortButtons = document.querySelectorAll('.sort-btn');
+        const viewDetailsButtons = document.querySelectorAll('.view-details');
+        const bookNowButtons = document.querySelectorAll('.book-now');
+        
+        // Update price display
+        priceRange.addEventListener('input', function() {
+            priceValue.textContent = `Up to $${this.value}/night`;
+        });
+        
+        // Sort buttons functionality
+        sortButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                sortButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Show loading animation
+                loader.classList.add('active');
+                
+                // Simulate sorting delay
+                setTimeout(() => {
+                    loader.classList.remove('active');
+                }, 800);
+            });
+        });
+        
+        // Search form submission
+        searchForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading animation
+            loader.classList.add('active');
+            
+            // Simulate search delay
+            setTimeout(() => {
+                loader.classList.remove('active');
+                
+                // Show success message
+                alert('Search completed! Found 12 hotels matching your criteria.');
+            }, 1500);
+        });
+        
+        // View details button
+        viewDetailsButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Show loading animation
+                loader.classList.add('active');
+                
+                // Simulate loading hotel details
+                setTimeout(() => {
+                    loader.classList.remove('active');
+                    
+                    // In a real implementation, this would navigate to a hotel details page
+                    alert('Hotel details page would open here. In a full implementation, this would navigate to a dedicated hotel page with gallery, room types, and more information.');
+                }, 800);
+            });
+        });
+        
+        // Book now button - redirect to WhatsApp
+        bookNowButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const hotelName = this.closest('.hotel-card').querySelector('.hotel-name').textContent;
+                const message = `Hello, I would like to book a room at ${hotelName} for the dates I selected. Can you help me with availability and rates?`;
+                const encodedMessage = encodeURIComponent(message);
+                const whatsappURL = `https://wa.me/6281234326186?text=${encodedMessage}`;
+                
+                window.open(whatsappURL, '_blank');
+            });
+        });
+        
+        // Set minimum date for check-in to today
+        const today = new Date().toISOString().split('T')[0];
+        const checkinInput = document.getElementById('checkin');
+        const checkoutInput = document.getElementById('checkout');
+        
+        checkinInput.min = today;
+        checkoutInput.min = today;
+        
+        // Set checkout to 3 days after checkin by default
+        const defaultCheckout = new Date();
+        defaultCheckout.setDate(defaultCheckout.getDate() + 3);
+        checkoutInput.value = defaultCheckout.toISOString().split('T')[0];
+        
+        // 3D hover effect for hotel cards
+        const hotelCards = document.querySelectorAll('.hotel-card');
+        hotelCards.forEach(card => {
+            card.addEventListener('mousemove', function(e) {
+                const cardRect = this.getBoundingClientRect();
+                const x = e.clientX - cardRect.left;
+                const y = e.clientY - cardRect.top;
+                
+                const centerX = cardRect.width / 2;
+                const centerY = cardRect.height / 2;
+                
+                const rotateY = (x - centerX) / 25;
+                const rotateX = (centerY - y) / 25;
+                
+                this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-15px)`;
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+            });
+        });
+        
+        // Parallax effect for shapes
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const shapes = document.querySelectorAll('.shape');
+            
+            shapes.forEach((shape, index) => {
+                const speed = 0.5 + (index * 0.1);
+                shape.style.transform = `translateY(${scrolled * speed * 0.1}px) rotate(${scrolled * 0.05}deg)`;
+            });
+        });
+        
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe elements to animate
+        document.querySelectorAll('.hotel-card, .info-card, .filter-card, .cs-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
