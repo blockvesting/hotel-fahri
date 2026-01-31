@@ -586,6 +586,7 @@
             height: 240px;
             position: relative;
             overflow: hidden;
+            background: linear-gradient(135deg, var(--dark-surface), var(--dark-card));
         }
 
         .hotel-image img {
@@ -611,6 +612,7 @@
             font-weight: 700;
             letter-spacing: 0.5px;
             box-shadow: 0 5px 15px rgba(245, 158, 11, 0.3);
+            z-index: 2;
         }
 
         .hotel-content {
@@ -750,6 +752,20 @@
             transform: translateY(-3px);
             box-shadow: 0 15px 30px rgba(14, 165, 233, 0.4);
             background: linear-gradient(135deg, var(--primary-dark), #7c3aed);
+        }
+
+        /* Fallback image styling */
+        .image-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--dark-surface), var(--dark-card));
+            color: var(--gray);
+            font-size: 14px;
+            text-align: center;
+            padding: 20px;
         }
 
         /* Customer Service Section */
@@ -1382,11 +1398,11 @@
             </div>
             
             <div class="hotels-grid">
-                <!-- Hotel 1 -->
+                <!-- Hotel 1 - Updated with working image -->
                 <div class="hotel-card">
                     <div class="hotel-card-inner">
                         <div class="hotel-image">
-                            <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1780&q=80" alt="The Ritz-Carlton Bali">
+                            <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1780&q=80" alt="The Ritz-Carlton Bali">
                             <div class="hotel-badge">LUXURY PICK</div>
                         </div>
                         <div class="hotel-content">
@@ -1430,11 +1446,11 @@
                     </div>
                 </div>
                 
-                <!-- Hotel 2 -->
+                <!-- Hotel 2 - Updated with working image -->
                 <div class="hotel-card">
                     <div class="hotel-card-inner">
                         <div class="hotel-image">
-                            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80" alt="Amandari Ubud">
+                            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=1770&q=80" alt="Amandari Ubud">
                             <div class="hotel-badge">ECO LUXURY</div>
                         </div>
                         <div class="hotel-content">
@@ -1478,39 +1494,40 @@
                     </div>
                 </div>
                 
-                <!-- Hotel 3 -->
+                <!-- Hotel 3 - Butler Service Hotel with working image -->
                 <div class="hotel-card">
                     <div class="hotel-card-inner">
                         <div class="hotel-image">
-                            <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80" alt="W Bali - Seminyak">
+                            <img src="https://images.unsplash.com/photo-1564501049418-3c27787d01e8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1770&q=80" alt="St. Regis Bali">
+                            <div class="hotel-badge">BUTLER SERVICE</div>
                         </div>
                         <div class="hotel-content">
                             <div class="hotel-header">
                                 <div>
-                                    <h3 class="hotel-name">W Bali - Seminyak</h3>
+                                    <h3 class="hotel-name">The St. Regis Bali</h3>
                                     <div class="hotel-location">
-                                        <i class="fas fa-map-marker-alt"></i> Seminyak Beach • Nightlife
+                                        <i class="fas fa-map-marker-alt"></i> Nusa Dua • Lagoon Access
                                     </div>
                                 </div>
                                 <div class="hotel-rating">
-                                    <i class="fas fa-star"></i> 4.7
+                                    <i class="fas fa-star"></i> 4.8
                                 </div>
                             </div>
-                            <p class="hotel-description">Contemporary design hotel with vibrant atmosphere, beach club, and rooftop bars. Perfect for social travelers.</p>
+                            <p class="hotel-description">Iconic luxury with legendary 24/7 butler service, private lagoon pools, and gourmet dining. The epitome of Balinese elegance.</p>
                             <div class="hotel-features">
                                 <div class="feature">
-                                    <i class="fas fa-cocktail"></i> Beach Club
+                                    <i class="fas fa-concierge-bell"></i> 24/7 Butler
                                 </div>
                                 <div class="feature">
-                                    <i class="fas fa-wifi"></i> Premium WiFi
+                                    <i class="fas fa-water"></i> Lagoon Pool
                                 </div>
                                 <div class="feature">
-                                    <i class="fas fa-dumbbell"></i> Fitness
+                                    <i class="fas fa-utensils"></i> Michelin Star
                                 </div>
                             </div>
                             <div class="hotel-footer">
                                 <div class="hotel-price">
-                                    $350<span>/night</span>
+                                    $650<span>/night</span>
                                 </div>
                                 <div class="hotel-actions">
                                     <button class="btn btn-outline view-details">
@@ -1525,11 +1542,11 @@
                     </div>
                 </div>
                 
-                <!-- Hotel 4 -->
+                <!-- Hotel 4 - Updated with working image -->
                 <div class="hotel-card">
                     <div class="hotel-card-inner">
                         <div class="hotel-image">
-                            <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80" alt="Four Seasons Resort">
+                            <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1770&q=80" alt="Four Seasons Resort">
                             <div class="hotel-badge">ROMANTIC</div>
                         </div>
                         <div class="hotel-content">
@@ -1573,40 +1590,40 @@
                     </div>
                 </div>
                 
-                <!-- Hotel 5 -->
+                <!-- Hotel 5 - Another Butler Service Hotel -->
                 <div class="hotel-card">
                     <div class="hotel-card-inner">
                         <div class="hotel-image">
-                            <img src="https://images.unsplash.com/photo-1564501049418-3c27787d01e8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80" alt="St. Regis Bali">
-                            <div class="hotel-badge">BUTLER SERVICE</div>
+                            <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1770&q=80" alt="Mandapa Ritz-Carlton">
+                            <div class="hotel-badge">PERSONAL BUTLER</div>
                         </div>
                         <div class="hotel-content">
                             <div class="hotel-header">
                                 <div>
-                                    <h3 class="hotel-name">The St. Regis Bali</h3>
+                                    <h3 class="hotel-name">Mandapa, Ritz-Carlton</h3>
                                     <div class="hotel-location">
-                                        <i class="fas fa-map-marker-alt"></i> Nusa Dua • Lagoon Access
+                                        <i class="fas fa-map-marker-alt"></i> Ubud • River Confluence
                                     </div>
                                 </div>
                                 <div class="hotel-rating">
-                                    <i class="fas fa-star"></i> 4.8
+                                    <i class="fas fa-star"></i> 4.9
                                 </div>
                             </div>
-                            <p class="hotel-description">Iconic luxury with legendary butler service, lagoon pools, and gourmet dining. The epitome of Balinese elegance.</p>
+                            <p class="hotel-description">Private reserve with personal butlers for each villa. Riverside setting with holistic wellness programs and cultural activities.</p>
                             <div class="hotel-features">
                                 <div class="feature">
-                                    <i class="fas fa-concierge-bell"></i> 24/7 Butler
+                                    <i class="fas fa-user-tie"></i> Personal Butler
                                 </div>
                                 <div class="feature">
-                                    <i class="fas fa-water"></i> Lagoon Pool
+                                    <i class="fas fa-spa"></i> Wellness Retreat
                                 </div>
                                 <div class="feature">
-                                    <i class="fas fa-utensils"></i> Michelin Star
+                                    <i class="fas fa-hat-chef"></i> Private Chef
                                 </div>
                             </div>
                             <div class="hotel-footer">
                                 <div class="hotel-price">
-                                    $650<span>/night</span>
+                                    $850<span>/night</span>
                                 </div>
                                 <div class="hotel-actions">
                                     <button class="btn btn-outline view-details">
@@ -1621,11 +1638,12 @@
                     </div>
                 </div>
                 
-                <!-- Hotel 6 -->
+                <!-- Hotel 6 - Updated with working image -->
                 <div class="hotel-card">
                     <div class="hotel-card-inner">
                         <div class="hotel-image">
-                            <img src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1769&q=80" alt="Alila Villas Uluwatu">
+                            <img src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1769&q=80" alt="Alila Villas Uluwatu">
+                            <div class="hotel-badge">CLIFFTOP VILLAS</div>
                         </div>
                         <div class="hotel-content">
                             <div class="hotel-header">
@@ -2045,9 +2063,21 @@
             });
         });
         
-        // Initialize on load
+        // Image fallback handler
         document.addEventListener('DOMContentLoaded', function() {
             createFloatingElements();
+            
+            // Handle broken images
+            const images = document.querySelectorAll('.hotel-image img');
+            images.forEach(img => {
+                img.addEventListener('error', function() {
+                    this.style.display = 'none';
+                    const placeholder = document.createElement('div');
+                    placeholder.className = 'image-placeholder';
+                    placeholder.innerHTML = `<i class="fas fa-hotel"></i><br>${this.alt}`;
+                    this.parentElement.appendChild(placeholder);
+                });
+            });
             
             // Animate elements on scroll
             const observerOptions = {
